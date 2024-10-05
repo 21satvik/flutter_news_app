@@ -14,9 +14,9 @@ class AuthService {
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      // Rethrow the exception for better handling
-      debugPrint('Sign up failed: $e');
-      rethrow; // Rethrow exception
+      // Log the error and rethrow
+      debugPrint('Error during sign up: ${e.message}');
+      rethrow;
     }
   }
 
@@ -29,18 +29,25 @@ class AuthService {
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      // Rethrow the exception for better handling
-      debugPrint('Login failed: $e');
-      rethrow; // Rethrow exception
+      // Log the error and rethrow
+      debugPrint('Error during login: ${e.message}');
+      rethrow;
     }
   }
 
-  // Logout
+  // Logout the current user
   Future<void> logout() async {
-    await _auth.signOut();
+    try {
+      await _auth.signOut();
+      debugPrint('User logged out successfully');
+    } catch (e) {
+      // Log error if sign out fails
+      debugPrint('Error during logout: ${e.toString()}');
+      rethrow;
+    }
   }
 
-  // Get current user
+  // Get current authenticated user
   User? get currentUser {
     return _auth.currentUser;
   }

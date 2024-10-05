@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import '../models/news_article.dart';
@@ -8,6 +9,7 @@ class NewsService {
   final String baseUrl = 'https://newsdata.io/api/1/latest';
 
   Future<List<NewsArticle>> fetchTopHeadlines(String country) async {
+    debugPrint(country);
     final response = await http
         .get(Uri.parse('$baseUrl?country=$country&language=en&apikey=$apiKey'));
 

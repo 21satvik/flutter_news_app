@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lingopanda_news/providers/region_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../constants/available_regions.dart';
+import '../providers/region_provider.dart';
 
 /// RegionSelectorScreen allows users to select their news region.
 class RegionSelectorScreen extends StatelessWidget {
@@ -19,10 +18,11 @@ class RegionSelectorScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: AvailableRegions.regions.length,
+          itemCount:
+              regionProvider.regions.length, // Use the regions from provider
           itemBuilder: (context, index) {
-            final regionCode = AvailableRegions.regions.keys.elementAt(index);
-            final regionName = AvailableRegions.regions[regionCode]!;
+            final regionCode = regionProvider.regions.keys.elementAt(index);
+            final regionName = regionProvider.regions[regionCode]!;
 
             return GestureDetector(
               onTap: () {

@@ -42,14 +42,7 @@ class NewsBody extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     final article = articles[index];
-                    return NewsCard(
-                      title: article.title,
-                      description: article.description ?? 'No description',
-                      imageUrl: article.imageUrl ??
-                          'https://img.freepik.com/premium-vector/breaking-news-world-map-background_23-2148506384.jpg',
-                      source: article.source,
-                      timeAgo: _timeAgo(article.pubDate),
-                    );
+                    return NewsCard(article: article);
                   },
                   childCount: articles.length,
                 ),
@@ -59,21 +52,5 @@ class NewsBody extends StatelessWidget {
         },
       ),
     );
-  }
-
-  String _timeAgo(String? publishedAt) {
-    if (publishedAt == null) return 'Unknown time';
-    final dateTime = DateTime.parse(publishedAt);
-    final difference = DateTime.now().difference(dateTime);
-
-    if (difference.inSeconds < 60) {
-      return '${difference.inSeconds} seconds ago';
-    } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes} minutes ago';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours} hours ago';
-    } else {
-      return '${difference.inDays} days ago';
-    }
   }
 }

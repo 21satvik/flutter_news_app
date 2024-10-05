@@ -13,7 +13,6 @@ class NewsService {
 
   /// Fetch top headlines based on the specified country.
   Future<List<NewsArticle>> fetchTopHeadlines(String country) async {
-    debugPrint(country);
     final response = await http
         .get(Uri.parse('$baseUrl?country=$country&language=en&apikey=$apiKey'));
 

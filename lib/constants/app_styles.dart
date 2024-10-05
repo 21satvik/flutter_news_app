@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-/**
- * AppStyles class that contains predefined colors and text styles 
- * used throughout the application.
- */
+/// AppStyles class that contains predefined colors and text styles
+/// used throughout the application.
 class AppStyles {
   static const Color primaryColor = Color(0xFF0c54be);
   static const Color secondaryColor = Color(0xFF303F60);

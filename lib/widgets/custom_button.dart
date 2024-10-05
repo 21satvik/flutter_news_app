@@ -5,20 +5,28 @@ import '../constants/app_styles.dart'; // Import your styles
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final bool isLoading;
 
-  const CustomButton({super.key, required this.text, required this.onPressed});
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    required this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppStyles.primaryColor, // Set to primaryColor
+        backgroundColor: isLoading
+            ? AppStyles.greyColor
+            : AppStyles.primaryColor, // Set to primaryColor
         padding: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       child: Text(
         text,
         style: AppStyles.boldText

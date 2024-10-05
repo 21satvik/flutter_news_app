@@ -1,8 +1,10 @@
 // lib/views/login_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import provider
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_button.dart';
 import '../constants/app_styles.dart';
+import '../providers/authentication_provider.dart'; // Import AuthenticationProvider
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -60,10 +62,38 @@ class LoginScreen extends StatelessWidget {
             ),
             // Space between password field and button
             SizedBox(height: spacingHeight * 1.5),
-            CustomButton(
-              text: 'Login',
-              onPressed: () {
-                // Handle Login
+            Consumer<AuthenticationProvider>(
+              // Use Consumer to access provider
+              builder: (context, authProvider, child) {
+                return CustomButton(
+                  text: 'Login',
+                  isLoading: authProvider.isLoading,
+                  onPressed: () async {
+                    String email = emailController.text.trim();
+                    String password = passwordController.text.trim();
+
+                    if (email.isNotEmpty && password.isNotEmpty) {
+                      bool loggedIn = await authProvider.login(email, password);
+                      if (loggedIn && context.mounted) {
+                        // Navigate to the news feed on successful login
+                        Navigator.pushReplacementNamed(context, '/news_feed');
+                      } else if (context.mounted) {
+                        // Show error message
+                        final errorMessage = authProvider.errorMessage;
+                        if (errorMessage != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(errorMessage)),
+                          );
+                        }
+                      }
+                    } else {
+                      // Show snackbar for empty fields
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please fill all fields')),
+                      );
+                    }
+                  },
+                );
               },
             ),
             SizedBox(height: spacingHeight),

@@ -1,7 +1,8 @@
-// lib/widgets/custom_text_field.dart
 import 'package:flutter/material.dart';
-import '../constants/app_styles.dart'; // Import your styles
 
+import '../constants/app_styles.dart';
+
+/// CustomTextField is a reusable text field widget that can be used for both regular and password inputs.
 class CustomTextField extends StatelessWidget {
   final String label;
   final bool isPassword;
@@ -22,14 +23,14 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         filled: true,
-        fillColor: AppStyles.lightColor, // Update fill color to grey
-        labelStyle: const TextStyle(color: Colors.black), // Set label style
+        fillColor: AppStyles.lightColor,
+        labelStyle: const TextStyle(color: Colors.black),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
       ),
-      style: AppStyles.regularText, // Use regular text style for input
+      style: AppStyles.regularText,
     );
   }
 }

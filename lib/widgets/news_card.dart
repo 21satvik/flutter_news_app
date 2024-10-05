@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_styles.dart';
 
+/// NewsCard displays an individual news article with its title, description, image, and other details.
 class NewsCard extends StatelessWidget {
   final String title;
   final String description;
@@ -19,15 +20,13 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Use MediaQuery to get the width of the screen
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Card(
-      margin: EdgeInsets.only(bottom: screenWidth * 0.04), // 4% of screen width
+      margin: EdgeInsets.only(bottom: screenWidth * 0.04),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: EdgeInsets.all(
-            screenWidth * 0.03), // Padding responsive to screen size
+        padding: EdgeInsets.all(screenWidth * 0.03),
         child: Row(
           children: [
             Expanded(
@@ -38,17 +37,15 @@ class NewsCard extends StatelessWidget {
                     source,
                     style: AppStyles.boldText.copyWith(
                       color: Colors.black,
-                      fontSize: screenWidth * 0.045, // Responsive font size
+                      fontSize: screenWidth * 0.045,
                     ),
                   ),
-                  SizedBox(
-                      height:
-                          screenWidth * 0.02), // Responsive vertical spacing
+                  SizedBox(height: screenWidth * 0.02),
                   Text(
-                    title, // Changed description to title for clarity
+                    title,
                     style: AppStyles.mediumText.copyWith(
                       color: Colors.black,
-                      fontSize: screenWidth * 0.04, // Responsive font size
+                      fontSize: screenWidth * 0.04,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -58,30 +55,29 @@ class NewsCard extends StatelessWidget {
                     timeAgo,
                     style: AppStyles.regularText.copyWith(
                       color: Colors.grey,
-                      fontSize: screenWidth * 0.035, // Responsive font size
+                      fontSize: screenWidth * 0.035,
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
-                width: screenWidth * 0.04), // Responsive horizontal spacing
+            SizedBox(width: screenWidth * 0.04),
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
                 imageUrl,
-                height: screenWidth * 0.2, // 20% of screen width for height
-                width: screenWidth * 0.2, // 20% of screen width for width
+                height: screenWidth * 0.2,
+                width: screenWidth * 0.2,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     height: screenWidth * 0.2,
                     width: screenWidth * 0.2,
-                    color: Colors.grey, // Placeholder color
+                    color: Colors.grey,
                     child: const Icon(
                       Icons.image_not_supported,
-                      color: Colors.white, // Icon color
-                    ), // Placeholder icon
+                      color: Colors.white,
+                    ),
                   );
                 },
                 loadingBuilder: (context, child, loadingProgress) {

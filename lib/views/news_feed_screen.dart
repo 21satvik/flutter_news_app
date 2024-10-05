@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lingopanda_news/providers/region_provider.dart';
-import 'package:provider/provider.dart'; // Import Provider
-import '../constants/app_styles.dart';
-import '../widgets/news_body.dart'; // Import the NewsBody widget
-import '../providers/news_provider.dart'; // Import the NewsProvider
-import '../widgets/app_drawer.dart'; // Import the AppDrawer
+import 'package:provider/provider.dart';
 
+import '../constants/app_styles.dart';
+import '../widgets/news_body.dart';
+import '../providers/news_provider.dart';
+import '../widgets/app_drawer.dart';
+
+/// NewsFeedScreen displays news articles based on the selected region.
 class NewsFeedScreen extends StatelessWidget {
   const NewsFeedScreen({super.key});
 
@@ -40,7 +42,7 @@ class NewsFeedScreen extends StatelessWidget {
             label: Text(
               selectedRegion.isNotEmpty
                   ? selectedRegion.toUpperCase()
-                  : 'Select Region', // Default text when no region is selected
+                  : 'Select Region',
               style: AppStyles.boldText.copyWith(
                 color: AppStyles.lightColor,
                 fontSize: 16,
@@ -49,15 +51,11 @@ class NewsFeedScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: const AppDrawer(), // Add AppDrawer here
+      drawer: const AppDrawer(),
       body: selectedRegion.isEmpty
-          ? const Center(
-              child:
-                  CircularProgressIndicator()) // Show loading indicator if no region is selected
+          ? const Center(child: CircularProgressIndicator())
           : ChangeNotifierProvider(
-              create: (_) => NewsProvider()
-                ..fetchNews(
-                    selectedRegion), // Fetch news based on the selected region
+              create: (_) => NewsProvider()..fetchNews(selectedRegion),
               child: Container(
                 color: AppStyles.greyColor,
                 child: const NewsBody(),

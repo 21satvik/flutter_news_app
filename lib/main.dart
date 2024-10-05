@@ -11,6 +11,10 @@ import 'package:lingopanda_news/providers/authentication_provider.dart';
 import 'views/login_screen.dart';
 import 'views/signup_screen.dart';
 
+/// The entry point of the application.
+///
+/// This function initializes Firebase, loads environment variables,
+/// and runs the MyApp widget.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
@@ -22,12 +26,16 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+/// The main application widget.
+///
+/// This widget sets up the routing and provider for the application,
+/// including authentication, news, and region providers.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Check if a user is already logged in
+    // Determine initial route based on authentication status
     String initialRoute =
         FirebaseAuth.instance.currentUser == null ? '/login' : '/news_feed';
 
@@ -40,7 +48,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyNews',
-        initialRoute: initialRoute, // Dynamically set the initial route
+        initialRoute: initialRoute,
         routes: {
           '/login': (context) => LoginScreen(),
           '/signup': (context) => SignupScreen(),

@@ -1,7 +1,8 @@
-// lib/widgets/custom_button.dart
 import 'package:flutter/material.dart';
-import '../constants/app_styles.dart'; // Import your styles
 
+import '../constants/app_styles.dart';
+
+/// CustomButton is a reusable button widget with a loading state.
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -18,9 +19,8 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: isLoading
-            ? AppStyles.greyColor
-            : AppStyles.primaryColor, // Set to primaryColor
+        backgroundColor:
+            isLoading ? AppStyles.greyColor : AppStyles.primaryColor,
         padding: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -29,8 +29,7 @@ class CustomButton extends StatelessWidget {
       onPressed: isLoading ? null : onPressed,
       child: Text(
         text,
-        style: AppStyles.boldText
-            .copyWith(color: AppStyles.lightColor), // Use AppStyles for font
+        style: AppStyles.boldText.copyWith(color: AppStyles.lightColor),
       ),
     );
   }

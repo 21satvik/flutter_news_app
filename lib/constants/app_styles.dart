@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
+/**
+ * AppStyles class that contains predefined colors and text styles 
+ * used throughout the application.
+ */
 class AppStyles {
-  // Colors
-  static const Color primaryColor = Color(0xFF0c54be); // Primary color
-  static const Color secondaryColor = Color(0xFF303F60); // Secondary color
-  static const Color lightColor = Color(0xFFf5f9fd); // Light color
-  static const Color greyColor = Color(0xFFced3dc); // Grey color
+  static const Color primaryColor = Color(0xFF0c54be);
+  static const Color secondaryColor = Color(0xFF303F60);
+  static const Color lightColor = Color(0xFFf5f9fd);
+  static const Color greyColor = Color(0xFFced3dc);
 
-  // Text Styles
   static TextStyle boldText = const TextStyle(
     color: secondaryColor,
     fontFamily: 'Poppins',

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lingopanda_news/providers/region_provider.dart';
 import 'package:provider/provider.dart';
+
 import '../constants/available_regions.dart';
 
+/// RegionSelectorScreen allows users to select their news region.
 class RegionSelectorScreen extends StatelessWidget {
   const RegionSelectorScreen({super.key});
 
@@ -24,15 +26,14 @@ class RegionSelectorScreen extends StatelessWidget {
 
             return GestureDetector(
               onTap: () {
-                regionProvider.selectRegion(regionCode); // Use the region code
+                regionProvider.selectRegion(regionCode);
                 Navigator.of(context).pushReplacementNamed('/news_feed');
               },
               child: Card(
-                margin: const EdgeInsets.symmetric(
-                    vertical: 8.0), // Spacing between cards
-                elevation: 4.0, // Card elevation
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                elevation: 4.0,
                 child: Container(
-                  padding: const EdgeInsets.all(16.0), // Padding inside card
+                  padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: regionProvider.selectedRegion == regionCode
@@ -44,7 +45,7 @@ class RegionSelectorScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      regionName, // Display full country name
+                      regionName,
                       style: const TextStyle(fontSize: 18),
                     ),
                   ),

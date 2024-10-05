@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lingopanda_news/constants/app_styles.dart';
-import '../providers/authentication_provider.dart'; // Import AuthProvider
-import '../providers/region_provider.dart'; // Import RegionProvider
-import '../models/user.dart'; // Import User model
-import 'package:provider/provider.dart'; // Import Provider package
+import 'package:provider/provider.dart';
 
+import '../providers/authentication_provider.dart';
+import '../models/user.dart';
+
+/// AppDrawer displays user-related information and option to log-out
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
@@ -28,13 +29,12 @@ class AppDrawer extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF0c548e), // Primary color
-                  ),
+                  decoration:
+                      const BoxDecoration(color: AppStyles.primaryColor),
                   child: const Text(
                     'Error loading user',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppStyles.lightColor,
                       fontSize: 24,
                     ),
                   ),
@@ -51,7 +51,7 @@ class AppDrawer extends StatelessWidget {
             children: <Widget>[
               DrawerHeader(
                 decoration: const BoxDecoration(
-                  color: AppStyles.primaryColor, // Primary color
+                  color: AppStyles.primaryColor,
                 ),
                 child: Text(
                   'Hello, ${user.name}!',
@@ -63,14 +63,14 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               ListTile(
-                leading: const Icon(Icons.logout,
-                    color: Color(0xFF303F60)), // Secondary color
+                leading:
+                    const Icon(Icons.logout, color: AppStyles.secondaryColor),
                 title: const Text(
                   'Logout',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
                 onTap: () {
-                  authProvider.logout(context); // Call the logout function
+                  authProvider.logout(context);
                 },
               ),
             ],

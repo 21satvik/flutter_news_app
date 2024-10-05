@@ -1,11 +1,12 @@
-// lib/views/signup_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_button.dart';
 import '../constants/app_styles.dart';
 import '../providers/authentication_provider.dart';
 
+/// SignupScreen allows users to create a new account.
 class SignupScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();

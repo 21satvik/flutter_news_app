@@ -1,47 +1,52 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lingopanda_news/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../services/auth_service.dart';
+
+/// AuthenticationProvider class manages user authentication and
+/// user data retrieval, notifying listeners of state changes.
 class AuthenticationProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String? _userId;
   String? _errorMessage;
   bool _isLoading = false;
-  Map<String, dynamic>? _userData; // Variable to hold user data
+  Map<String, dynamic>? _userData;
 
   AuthenticationProvider() {
-    _initializeUser(); // Check if user is already logged in
+    _initializeUser();
   }
 
   String? get userId => _userId;
   String? get errorMessage => _errorMessage;
   bool get isLoading => _isLoading;
-  Map<String, dynamic>? get userData => _userData; // Getter for user data
+  Map<String, dynamic>? get userData => _userData;
 
+  /// Initializes user data if a user is already logged in.
   Future<void> _initializeUser() async {
-    User? user =
-        _authService.currentUser; // Get the current user from AuthService
+    User? user = _authService.currentUser;
     if (user != null) {
-      _userId = user.uid; // Set the userId if logged in
-      await fetchUserData(); // Fetch user data after initialization
+      _userId = user.uid;
+      await fetchUserData();
       notifyListeners();
     }
   }
 
+  /// Fetches user data from Firestore using the user ID.
   Future<void> fetchUserData() async {
-    if (_userId == null) return; // If no user ID, exit the method
+    if (_userId == null) return;
     try {
       DocumentSnapshot snapshot =
           await _firestore.collection('users').doc(_userId).get();
-      _userData = snapshot.data() as Map<String, dynamic>?; // Store user data
-      notifyListeners(); // Notify listeners about data change
+      _userData = snapshot.data() as Map<String, dynamic>?;
+      notifyListeners();
     } catch (e) {
-      print('Error fetching user data: $e'); // Handle any errors
+      debugPrint('Error fetching user data: $e');
     }
   }
 
+  /// Handles user login and updates state accordingly.
   Future<bool> login(String email, String password) async {
     _isLoading = true;
     notifyListeners();
@@ -51,7 +56,7 @@ class AuthenticationProvider with ChangeNotifier {
       if (user != null) {
         _userId = user.uid;
         _errorMessage = null;
-        await fetchUserData(); // Fetch user data on login
+        await fetchUserData();
         return true;
       }
     } catch (e) {
@@ -64,6 +69,7 @@ class AuthenticationProvider with ChangeNotifier {
     return false;
   }
 
+  /// Handles user signup and stores user information in Firestore.
   Future<bool> signUp(String email, String password, String username) async {
     _isLoading = true;
     notifyListeners();
@@ -80,7 +86,7 @@ class AuthenticationProvider with ChangeNotifier {
           'createdAt': DateTime.now().toIso8601String(),
         });
 
-        await fetchUserData(); // Fetch user data on signup
+        await fetchUserData();
         return true;
       }
     } catch (e) {
@@ -93,18 +99,19 @@ class AuthenticationProvider with ChangeNotifier {
     return false;
   }
 
+  /// Logs out the current user and navigates to the login screen.
   Future<void> logout(BuildContext context) async {
     await _authService.logout();
-    _userId = null; // Clear user ID
-    _userData = null; // Clear user data
+    _userId = null;
+    _userData = null;
     notifyListeners();
 
-    // Navigate to login screen after logout
     if (context.mounted) {
       Navigator.of(context).pushReplacementNamed('/login');
     }
   }
 
+  /// Handles authentication errors and returns corresponding messages.
   String _handleAuthError(dynamic error) {
     if (error is FirebaseAuthException) {
       switch (error.code) {

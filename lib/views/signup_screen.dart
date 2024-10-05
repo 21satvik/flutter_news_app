@@ -71,7 +71,7 @@ class SignupScreen extends StatelessWidget {
                         password.isNotEmpty) {
                       try {
                         bool signedUp =
-                            await authProvider.signUp(email, password);
+                            await authProvider.signUp(email, password, name);
                         if (context.mounted && signedUp) {
                           Navigator.pushReplacementNamed(context, '/news_feed');
                         } else if (context.mounted) {

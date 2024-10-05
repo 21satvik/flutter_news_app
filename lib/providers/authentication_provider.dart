@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lingopanda_news/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
 
 class AuthenticationProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
+  final FirebaseFirestore _firestore =
+      FirebaseFirestore.instance; // Instantiate Firestore
   String? _userId;
   String? _errorMessage;
   bool _isLoading = false;
@@ -33,7 +36,7 @@ class AuthenticationProvider with ChangeNotifier {
     return false; // Return false if login failed
   }
 
-  Future<bool> signUp(String email, String password) async {
+  Future<bool> signUp(String email, String password, String username) async {
     _isLoading = true; // Set loading to true
     notifyListeners();
 
@@ -42,6 +45,14 @@ class AuthenticationProvider with ChangeNotifier {
       if (user != null) {
         _userId = user.uid; // Store user ID
         _errorMessage = null; // Clear any previous error
+
+        // Store user details in Firestore
+        await _firestore.collection('users').doc(_userId).set({
+          'email': email,
+          'username': username,
+          'createdAt': DateTime.now().toIso8601String(),
+        });
+
         return true; // Successful signup
       }
     } catch (e) {
